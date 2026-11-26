@@ -1,41 +1,67 @@
 
-import javafx.application.Application;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import zero.Color;
+import zero.GameApp;
+import zero.Key;
+import zero.ui.Button;
+import zero.ui.Column;
+import zero.ui.Label;
+import zero.ui.Row;
 
-public class Main extends Application
+public class Main extends GameApp
 {
     private int number = (int)(Math.random() * 100) + 1;
+    private String guessText = "";
 
-    public void start(Stage stage)
+    private Label inputDisplay;
+    private Label result;
+    private Button submit;
+
+    public void setup()
     {
         Label title = new Label("NUMBER GUESSING GAME");
 
         Label question = new Label("Guess a number between 1 and 100!");
 
-        TextField input = new TextField();
-        input.setPromptText("Enter your guess");
+        inputDisplay = new Label("Enter your guess:");
 
-        Button submit = new Button("Submit Guess");
+        submit = new Button("Submit Guess");
 
         Button restart = new Button("Restart Game");
 
-        Label result = new Label("");
+        result = new Label("");
 
         Label hints = new Label(
             "HINTS:\n- The number is between 1 and 100.\n- Keep guessing until you get it right!"
         );
 
-        submit.setOnAction(e ->
+        // Number buttons
+        Button one = makeButton("1");
+        Button two = makeButton("2");
+        Button three = makeButton("3");
+
+        Button four = makeButton("4");
+        Button five = makeButton("5");
+        Button six = makeButton("6");
+
+        Button seven = makeButton("7");
+        Button eight = makeButton("8");
+        Button nine = makeButton("9");
+
+        Button zero = makeButton("0");
+
+        Button clear = new Button("Clear");
+
+        clear.onClick(() ->
+        {
+            guessText = "";
+            inputDisplay.setText("Enter your guess:");
+        });
+
+        submit.onClick(() ->
         {
             try
             {
-                int guess = Integer.parseInt(input.getText());
+                int guess = Integer.parseInt(guessText);
 
                 if (guess > number)
                 {
@@ -48,10 +74,11 @@ public class Main extends Application
                 else
                 {
                     result.setText("Correct! You win!");
-                    submit.setDisable(true);
+                    submit.setEnabled(false);
                 }
 
-                input.clear();
+                guessText = "";
+                inputDisplay.setText("Enter your guess:");
             }
             catch (NumberFormatException ex)
             {
@@ -59,34 +86,47 @@ public class Main extends Application
             }
         });
 
-        restart.setOnAction(e ->
+        restart.onClick(() ->
         {
             number = (int)(Math.random() * 100) + 1;
 
-            input.clear();
-            result.setText("");
+            guessText = "";
+            inputDisplay.setText("Enter your guess:");
 
-            submit.setDisable(false);
+            result.setText("");
+            submit.setEnabled(true);
         });
 
-        VBox layout = new VBox(15);
-
-        layout.setAlignment(Pos.CENTER);
-        layout.getChildren().addAll(
+        Column layout = new Column(15,
             title,
             question,
-            input,
+            inputDisplay,
+
+            new Row(10, one, two, three),
+            new Row(10, four, five, six),
+            new Row(10, seven, eight, nine),
+            new Row(10, zero, clear),
+
             submit,
             restart,
             result,
             hints
         );
 
-        Scene scene = new Scene(layout, 400, 450);
+        show(layout);
+    }
 
-        stage.setTitle("Number Guessing Game");
-        stage.setScene(scene);
-        stage.show();
+    private Button makeButton(String digit)
+    {
+        Button button = new Button(digit);
+
+        button.onClick(() ->
+        {
+            guessText += digit;
+            inputDisplay.setText(guessText);
+        });
+
+        return button;
     }
 
     public static void main(String[] args)
