@@ -104,7 +104,7 @@ public class Main extends GameApp {
     }
 
     public void restart() {
-        number = (int) (Math.random() * 100) + 1;
+        number = new java.util.Random().nextInt(100) + 1;
 
         guess = 0;
         done = false;
