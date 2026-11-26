@@ -45,8 +45,8 @@
     },
     {
       "path": "src/sharing/authoring.js",
-      "sha256": "049d0989e36372746ee63af49038f935c00c18a777cf6a15e6e800170798803d",
-      "bytes": 33357
+      "sha256": "f73da8a02af61aca4d88248f960450ad1f4080d4c488654f439b5e734895501f",
+      "bytes": 33752
     },
     {
       "path": "src/sharing/configuration.js",
@@ -60,13 +60,13 @@
     },
     {
       "path": "src/sharing/contracts.js",
-      "sha256": "4f4c18b353429c88772edd72d833a8ce4c6226927f99f66e8a0bd94e08bfc062",
-      "bytes": 17138
+      "sha256": "e9ebb2f7ce2e108b9dd5f83feabf0b27a9457fef7a6a7dd81e7899d51e10a805",
+      "bytes": 17598
     },
     {
       "path": "src/sharing/jar.js",
-      "sha256": "8dae24bbaea527e3da2e7db9975108a8968321441438f204b939fec77874f78d",
-      "bytes": 5768
+      "sha256": "b0ceee226da4fee3efea05139ff9d511d0e3d88a12bbffb4cac931b23fc03517",
+      "bytes": 5776
     },
     {
       "path": "src/sharing/owned-library.js",
@@ -75,8 +75,8 @@
     },
     {
       "path": "src/sharing/tutorial-practice.js",
-      "sha256": "6ab04a5abf7b362c61de199642b1a915b79f852e34e6b5cc021e64987a1794fc",
-      "bytes": 764
+      "sha256": "7a9a04b88d27292a5beaa0b7cc257bdd1f17251e2494e3d789d0b34bca7490f6",
+      "bytes": 869
     },
     {
       "path": "src/web-export/README.md",
@@ -235,8 +235,8 @@
     },
     {
       "path": "src/web-export/libraries.js",
-      "sha256": "e6729fda2ae5948f8eef5403362d7ea80917ac9507194da1527a4d8d542a4908",
-      "bytes": 8676
+      "sha256": "076f94da13d4c512c1a26a4e991e6f9553571de0806012020a7300b2b8e922be",
+      "bytes": 9273
     },
     {
       "path": "src/web-export/notices/Apache-2.0.txt",
@@ -285,8 +285,8 @@
     },
     {
       "path": "src/web-export/snapshot.js",
-      "sha256": "f03a94666683b14f1355aecec206c2b4dc3e8246350c497f1fb2ac05677bf2c8",
-      "bytes": 26762
+      "sha256": "906deb04fafdac3545f54733276bbebaba870ce365aa37cca0eecc67dd12aa01",
+      "bytes": 27140
     },
     {
       "path": "src/web-export/template/FxEvents.java",
@@ -324,5 +324,5 @@
       "bytes": 1796
     }
   ],
-  "closureSha256": "6715746c537176fd63fd2eb3e77dcd650ccfa98442a176a2067dc6d1f931767b"
+  "closureSha256": "7880d451a24f2318227bd39d23f0500c29dcfcb5adb56e4a867aba85a9c16c24"
 }
