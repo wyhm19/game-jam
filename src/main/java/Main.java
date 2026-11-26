@@ -7,151 +7,123 @@ import zero.ui.Column;
 import zero.ui.Label;
 import zero.ui.Row;
 
-public class Main extends GameApp
-{
-    private int number = 42;
-    private String guessText = "";
+public class Main extends GameApp {
 
+    private int number = 42;
+    private int guess = 0;
+    private boolean done;
     private Label inputDisplay;
     private Label result;
-    private Button submit;
+    private Label hints;
 
-    public void setup()
-    {
+    @Override public void settings() {
+        padding(20);
+        size(400, 500);
+    }
+
+    @Override public void setup() {
         Label title = new Label("NUMBER GUESSING GAME");
-
         Label question = new Label("Guess a number between 1 and 100!");
 
-        inputDisplay = new Label("Enter your guess:");
-
-        submit = new Button("Submit Guess");
-
-        Button restart = new Button("Restart Game");
-
+        inputDisplay = new Label("Your guess: 0");
         result = new Label("");
 
-        Label hints = new Label(
+        hints = new Label(
             "HINTS:\n- The number is between 1 and 100.\n- Keep guessing until you get it right!"
         );
 
-        Button one = makeButton("1");
-        Button two = makeButton("2");
-        Button three = makeButton("3");
+        Button one = makeButton("1", 1);
+        Button two = makeButton("2", 2);
+        Button three = makeButton("3", 3);
 
-        Button four = makeButton("4");
-        Button five = makeButton("5");
-        Button six = makeButton("6");
+        Button four = makeButton("4", 4);
+        Button five = makeButton("5", 5);
+        Button six = makeButton("6", 6);
 
-        Button seven = makeButton("7");
-        Button eight = makeButton("8");
-        Button nine = makeButton("9");
+        Button seven = makeButton("7", 7);
+        Button eight = makeButton("8", 8);
+        Button nine = makeButton("9", 9);
 
-        Button zero = makeButton("0");
+        Button zero = makeButton("0", 0);
 
         Button clear = new Button("Clear");
-
-        clear.onClick(() ->
-        {
-            guessText = "";
-            inputDisplay.setText("Enter your guess:");
+        clear.onClick(() -> {
+            guess = 0;
+            inputDisplay.setText("Your guess: 0");
         });
 
-        submit.onClick(() ->
-        {
-            int guess = 0;
-            boolean valid = true;
+        Button submit = new Button("Submit Guess");
+        submit.onClick(() -> {
+            if (done) return;
 
-            if (guessText.length() == 0)
-            {
-                valid = false;
+            if (guess < 1 || guess > 100) {
+                result.setText("Enter a number from 1 to 100!");
             }
-
-            for (int i = 0; i < guessText.length(); i++)
-            {
-                char digit = guessText.charAt(i);
-
-                if (digit < '0' || digit > '9')
-                {
-                    valid = false;
-                }
-                else
-                {
-                    guess = guess * 10 + (digit - '0');
-                }
-            }
-
-            if (!valid || guess < 1 || guess > 100)
-            {
-                result.setText("Please enter a number from 1 to 100!");
-            }
-            else if (guess > number)
-            {
+            else if (guess > number) {
                 result.setText("Too high! Try again.");
             }
-            else if (guess < number)
-            {
+            else if (guess < number) {
                 result.setText("Too low! Try again.");
             }
-            else
-            {
+            else {
                 result.setText("Correct! You win!");
-                submit.setEnabled(false);
+                done = true;
             }
 
-            guessText = "";
-            inputDisplay.setText("Enter your guess:");
+            guess = 0;
+            inputDisplay.setText("Your guess: 0");
         });
 
-        restart.onClick(() ->
-        {
-            number++;
+        Button restart = new Button("Restart Game");
+        restart.onClick(() -> restart());
 
-            if (number > 100)
-            {
-                number = 1;
-            }
-
-            guessText = "";
-            inputDisplay.setText("Enter your guess:");
-
-            result.setText("");
-            submit.setEnabled(true);
-        });
-
-        Column layout = new Column(15,
+        controls(new Column(15,
             title,
             question,
             inputDisplay,
-
             new Row(10, one, two, three),
             new Row(10, four, five, six),
             new Row(10, seven, eight, nine),
             new Row(10, zero, clear),
-
             submit,
             restart,
             result,
             hints
-        );
+        ));
 
-        show(layout);
+        restart();
     }
 
-    private Button makeButton(String digit)
-    {
-        Button button = new Button(digit);
+    private Button makeButton(String text, int digit) {
+        Button button = new Button(text);
 
-        button.onClick(() ->
-        {
-            guessText += digit;
-            inputDisplay.setText(guessText);
+        button.onClick(() -> {
+            if (!done) {
+                guess = guess * 10 + digit;
+                inputDisplay.setText("Your guess: " + guess);
+            }
         });
 
         return button;
     }
 
-    public static void main(String[] args)
-    {
+    public void restart() {
+        number++;
+
+        if (number > 100) {
+            number = 1;
+        }
+
+        guess = 0;
+        done = false;
+
+        inputDisplay.setText("Your guess: 0");
+        result.setText("");
+
+        showGame();
+    }
+
+    public static void main(String[] args) {
         launch(args);
     }
 }
