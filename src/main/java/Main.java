@@ -1,7 +1,6 @@
 
 import zero.Color;
 import zero.GameApp;
-import zero.Key;
 import zero.ui.Button;
 import zero.ui.Column;
 import zero.ui.Label;
@@ -9,27 +8,26 @@ import zero.ui.Row;
 
 public class Main extends GameApp {
 
-    private int number = 42;
+    private int number;
     private int guess = 0;
     private boolean done;
     private Label inputDisplay;
     private Label result;
-    private Label hints;
 
     @Override public void settings() {
-        padding(20);
-        size(400, 500);
+        padding(10);
+        size(640, 460);
     }
 
     @Override public void setup() {
         Label title = new Label("NUMBER GUESSING GAME");
         Label question = new Label("Guess a number between 1 and 100!");
 
-        inputDisplay = new Label("Your guess: 0");
+        inputDisplay = new Label("Enter your guess:");
         result = new Label("");
 
-        hints = new Label(
-            "HINTS:\n- The number is between 1 and 100.\n- Keep guessing until you get it right!"
+        Label hints = new Label(
+            "HINTS: Guess between 1 and 100. Keep trying until you get it right!"
         );
 
         Button one = makeButton("1", 1);
@@ -49,7 +47,7 @@ public class Main extends GameApp {
         Button clear = new Button("Clear");
         clear.onClick(() -> {
             guess = 0;
-            inputDisplay.setText("Your guess: 0");
+            inputDisplay.setText("Enter your guess:");
         });
 
         Button submit = new Button("Submit Guess");
@@ -71,20 +69,18 @@ public class Main extends GameApp {
             }
 
             guess = 0;
-            inputDisplay.setText("Your guess: 0");
+            inputDisplay.setText("Enter your guess:");
         });
 
         Button restart = new Button("Restart Game");
         restart.onClick(() -> restart());
 
-        controls(new Column(15,
+        controls(new Column(8,
             title,
             question,
             inputDisplay,
-            new Row(10, one, two, three),
-            new Row(10, four, five, six),
-            new Row(10, seven, eight, nine),
-            new Row(10, zero, clear),
+            new Row(8, one, two, three, four, five),
+            new Row(8, six, seven, eight, nine, zero, clear),
             submit,
             restart,
             result,
@@ -108,16 +104,12 @@ public class Main extends GameApp {
     }
 
     public void restart() {
-        number++;
-
-        if (number > 100) {
-            number = 1;
-        }
+        number = (int) (Math.random() * 100) + 1;
 
         guess = 0;
         done = false;
 
-        inputDisplay.setText("Your guess: 0");
+        inputDisplay.setText("Enter your guess:");
         result.setText("");
 
         showGame();
