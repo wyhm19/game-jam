@@ -9,7 +9,7 @@ import zero.ui.Row;
 
 public class Main extends GameApp
 {
-    private int number = (int)(Math.random() * 100) + 1;
+    private int number = 42;
     private String guessText = "";
 
     private Label inputDisplay;
@@ -34,7 +34,6 @@ public class Main extends GameApp
             "HINTS:\n- The number is between 1 and 100.\n- Keep guessing until you get it right!"
         );
 
-        // Number buttons
         Button one = makeButton("1");
         Button two = makeButton("2");
         Button three = makeButton("3");
@@ -59,36 +58,58 @@ public class Main extends GameApp
 
         submit.onClick(() ->
         {
-            try
-            {
-                int guess = Integer.parseInt(guessText);
+            int guess = 0;
+            boolean valid = true;
 
-                if (guess > number)
+            if (guessText.length() == 0)
+            {
+                valid = false;
+            }
+
+            for (int i = 0; i < guessText.length(); i++)
+            {
+                char digit = guessText.charAt(i);
+
+                if (digit < '0' || digit > '9')
                 {
-                    result.setText("Too high! Try again.");
-                }
-                else if (guess < number)
-                {
-                    result.setText("Too low! Try again.");
+                    valid = false;
                 }
                 else
                 {
-                    result.setText("Correct! You win!");
-                    submit.setEnabled(false);
+                    guess = guess * 10 + (digit - '0');
                 }
+            }
 
-                guessText = "";
-                inputDisplay.setText("Enter your guess:");
-            }
-            catch (NumberFormatException ex)
+            if (!valid || guess < 1 || guess > 100)
             {
-                result.setText("Please enter a valid number!");
+                result.setText("Please enter a number from 1 to 100!");
             }
+            else if (guess > number)
+            {
+                result.setText("Too high! Try again.");
+            }
+            else if (guess < number)
+            {
+                result.setText("Too low! Try again.");
+            }
+            else
+            {
+                result.setText("Correct! You win!");
+                submit.setEnabled(false);
+            }
+
+            guessText = "";
+            inputDisplay.setText("Enter your guess:");
         });
 
         restart.onClick(() ->
         {
-            number = (int)(Math.random() * 100) + 1;
+            number++;
+
+            if (number > 100)
+            {
+                number = 1;
+            }
 
             guessText = "";
             inputDisplay.setText("Enter your guess:");
