@@ -104,7 +104,7 @@ public class Main extends GameApp {
     }
 
     public void restart() {
-        number = java.util.concurrent.ThreadLocalRandom.current().nextInt(1, 101);
+        number = 42;
 
         guess = 0;
         done = false;
